@@ -33,25 +33,25 @@ client.on('message', message => {
     // Beep
     else if (message.content.startsWith(`${prefix}beep`)) { command.beep(message); } 
     // Commands
-    if (message.content === '!commands') {
+    else if (message.content === '!commands') {
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
             message.channel.send(`${prefix}${command.name}: ${command.description}`);
         }
     }
     // User Info
-    if (message.content.startsWith(`${prefix}userinfo`)) {
+    else if (message.content.startsWith(`${prefix}userinfo`)) {
         command.userinfo(message);
     }
     // Define
-    if (message.content.startsWith(`${prefix}define`)) {
+    else if (message.content.startsWith(`${prefix}define`)) {
         command.define(message);
     }
     // Pronounce
-    if (message.content.startsWith(`${prefix}pronounce`)) {
+    else if (message.content.startsWith(`${prefix}pronounce`)) {
         command.pronounce(message);
     }
-    if (message.content.startsWith(`${prefix}find`)) {
+    else if (message.content.startsWith(`${prefix}find`)) {
         command.find(message);
     }
 });
