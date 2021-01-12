@@ -1,4 +1,4 @@
-const nbaGames = require('nba-bball');
+const nbaGames = require();
 
 module.exports = {
     name: 'schedule',
