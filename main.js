@@ -54,6 +54,9 @@ client.on('message', message => {
     else if (message.content.startsWith(`${prefix}find`)) {
         command.find(message);
     }
+    else if (message.content.startsWith(`${prefix}schedule`)) {
+        command.schedule(message);
+    }
 });
 
 client.login(token);
