@@ -6,7 +6,6 @@ module.exports = {
     name: 'define',
     description: 'Defines word given and provides pronounciation if possible. Requires dictionary input',
     define(message) {
-        var channel = message.member.voice.channel;
         const args = message.content.split(" ");
         if (!args[1]) {
             message.channel.send('Please type what word you would like to define.');
@@ -18,9 +17,7 @@ module.exports = {
             dictionary.meaning(args[1]).then((result) => {
                 message.channel.send(`Word: ${result.word}\nDefinition: ${result.meaning}`);
             })
-            .catch((e) => {
-                message.channel.send('Word not found.')
-            });
+            .catch((e) => { message.channel.send('Word not found.') });
         }
         else if (args[2].startsWith('ud')) {
             ud.define(args[1]).then((results) => {
@@ -30,9 +27,7 @@ module.exports = {
                     }
                 })
             })
-            .catch((error) => {
-                message.channel.send('Word not found.')
-            })
+            .catch((e) => { message.channel.send('Word not found.') })
         }  
     }
 }
