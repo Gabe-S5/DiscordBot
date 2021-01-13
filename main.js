@@ -32,6 +32,7 @@ client.on('message', message => {
     if (message.content.startsWith(`${prefix}ping`)){ command.ping(message); }
     // Beep
     else if (message.content.startsWith(`${prefix}beep`)) { command.beep(message); } 
+
     // Commands
     else if (message.content === '!commands') {
         for (const file of commandFiles) {
@@ -40,20 +41,17 @@ client.on('message', message => {
         }
     }
     // User Info
-    else if (message.content.startsWith(`${prefix}userinfo`)) {
-        command.userinfo(message);
-    }
+    else if (message.content.startsWith(`${prefix}userinfo`)) { command.userinfo(message); }
     // Define
-    else if (message.content.startsWith(`${prefix}define`)) {
-        command.define(message);
-    }
+    else if (message.content.startsWith(`${prefix}define`)) { command.define(message); }
     // Pronounce
-    else if (message.content.startsWith(`${prefix}pronounce`)) {
-        command.pronounce(message);
-    }
-    else if (message.content.startsWith(`${prefix}find`)) {
-        command.find(message);
-    }
+    else if (message.content.startsWith(`${prefix}pronounce`)) { command.pronounce(message); }
+    // Find (minecraft mods)
+    else if (message.content.startsWith(`${prefix}find`)) { command.find(message); }
+    // Schedule (NBA)
+    else if (message.content.startsWith(`${prefix}schedule`)) { command.schedule(message); }
+    // Clear 
+    else if (message.content.startsWith(`${prefix}clear`)) { command.clear(message); }
 });
 
 client.login(token);
