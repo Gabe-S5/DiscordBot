@@ -4,10 +4,9 @@ const dictionary = new cd.Dictionary();
 module.exports = {
     name: 'pronounce',
     description: 'Pronounces word on voice channel',
-    pronounce(message) {
+    execute(message, args) {
         var channel = message.member.voice.channel;
-        const args = message.content.split(" ");
-        dictionary.meaning(args[1]).then((result) => {
+        dictionary.meaning(args[0]).then((result) => {
             if (!channel) {
                 message.channel.send("You must be in a voice channel for me to pronounce it for you.")
             }
