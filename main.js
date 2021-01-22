@@ -1,7 +1,8 @@
 var fs = require('fs');
 const {prefix, token} = require('./.credentials/config.json');
 const Discord = require('discord.js');
-const client = new Discord.Client();
+
+const client = new Discord.Client();;
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -21,37 +22,28 @@ client.on('message', message => {
 
     // Makes chat visible on logs, including name of author
     console.log(`[${message.author.tag}]: ${message.content}`);
+    if (!message.content.startsWith(prefix) || message.author.bot) return;
 
     const args = message.content.slice(prefix.length).split(/ +/);
-    const commandName = args.shift().toLowerCase();
-    const command = client.commands.get(commandName);
+    const command = args.shift().toLowerCase();
 
-    // Ignores bot messages
-    if (message.author.bot) return;
-    // Ping
-    if (message.content.startsWith(`${prefix}ping`)){ command.ping(message); }
-    // Beep
-    else if (message.content.startsWith(`${prefix}beep`)) { command.beep(message); } 
-
-    // Commands
-    else if (message.content === '!commands') {
+    // Show commands
+    if (message.content.startsWith(`${prefix}commands`)) {
         for (const file of commandFiles) {
             const command = require(`./commands/${file}`);
             message.channel.send(`${prefix}${command.name}: ${command.description}`);
         }
     }
-    // User Info
-    else if (message.content.startsWith(`${prefix}userinfo`)) { command.userinfo(message); }
-    // Define
-    else if (message.content.startsWith(`${prefix}define`)) { command.define(message); }
-    // Pronounce
-    else if (message.content.startsWith(`${prefix}pronounce`)) { command.pronounce(message); }
-    // Find (minecraft mods)
-    else if (message.content.startsWith(`${prefix}find`)) { command.find(message); }
-    // Schedule (NBA)
-    else if (message.content.startsWith(`${prefix}schedule`)) { command.schedule(message); }
-    // Clear 
-    else if (message.content.startsWith(`${prefix}clear`)) { command.clear(message); }
+    // Not an existing command
+    if (!client.commands.has(command)) return;
+
+    // Try/Catch for each command.name in the commands folder 
+    try {
+        client.commands.get(command).execute(message, args);
+    } catch (error) {
+        console.error(error);
+        message.reply('There was an error while trying to execute that command. ')
+    }
 });
 
 client.login(token);
